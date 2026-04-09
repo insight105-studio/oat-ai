@@ -1,0 +1,48 @@
+name: 'Publish Tauri App'
+
+on:
+  push:
+    tags:
+      - 'v*' # Workflow ini akan berjalan otomatis setiap kali Anda men-push tag baru dengan prefix "v" (contoh: v1.0.0)
+
+jobs:
+  publish-tauri:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        # Anda dapat menyesuaikan platform yang ingin di-build.
+        # Saat ini disetel untuk membuat file installer di 3 platform sekaligus.
+        platform: [windows-latest, ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.platform }}
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+          
+      - name: install frontend dependencies
+        run: npm install
+        
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: app-v__VERSION__ # Tauri akan otomatis mengganti __VERSION__ dengan versi di tauri.conf.json
+          releaseName: 'Oats AI v__VERSION__'
+          releaseBody: 'Release for Oats AI versi __VERSION__'
+          releaseDraft: true     # Set ke false jika ingin langsung otomatis ter-publish, true = masuk ke draft GitHub Release dulu
+          prerelease: false
