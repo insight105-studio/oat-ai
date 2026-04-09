@@ -44,5 +44,5 @@ jobs:
           tagName: app-v__VERSION__ # Tauri akan otomatis mengganti __VERSION__ dengan versi di tauri.conf.json
           releaseName: 'Oats AI v__VERSION__'
           releaseBody: 'Release for Oats AI versi __VERSION__'
-          releaseDraft: true     # Set ke false jika ingin langsung otomatis ter-publish, true = masuk ke draft GitHub Release dulu
+          releaseDraft: false     # Set ke false agar langsung otomatis ter-publish (tidak berupa draft)
           prerelease: false
