@@ -13,41 +13,41 @@ Oats AI is a privacy-first desktop application for recording, transcribing, and 
    npm run tauri dev
    ```
 
-## 📦 Build & Publish Aplikasi
+## 📦 Build & Publish Application
 
-Untuk menghasilkan *installer* (*build release*) seperti `.exe` / `.app` / `.deb` yang siap didistribusikan ke *user*, Anda hanya perlu melakukan *building* dengan 1 perintah berikut di terminal:
+To generate installers (release builds) such as `.exe` / `.app` / `.deb` ready for user distribution, you only need to build them using a single terminal command:
 
 ```bash
 npm run tauri build
 ```
 
-> **Catatan:** Waktu *build* untuk pertama kalinya akan memakan waktu cukup lama karena aplikasi perlu meng-_compile_ keseluruhan kode _back-end_ (Rust). Hasil akhir berupa file instalasi (`.exe` dll) akan digenerate secara otomatis ke dalam folder `src-tauri/target/release/bundle/`.
+> **Note:** The initial build process will take quite some time as the application needs to compile the entire back-end code (Rust). The final installation files (`.exe` etc.) will be automatically generated inside the `src-tauri/target/release/bundle/` folder.
 
 ---
 
-## ⚙️ Konfigurasi AI Summary (OpenRouter)
+## ⚙️ AI Summary Configuration (OpenRouter)
 
-Oats AI dilengkapi dengan fitur peringkasan teks lanjutan yang ditenagai oleh LLM via OpenRouter. Untuk menggunakan fitur `✦ Ringkas`, Anda harus memasukkan API Key ke dalam sistem aplikasi.
+Oats AI is equipped with an advanced text summarization feature powered by LLMs via OpenRouter. To use the `✦ Summarize` feature, you must enter an API Key into the application system.
 
-### Cara Mendapatkan API Key (Gratis 100%):
+### How to Get an API Key (100% Free):
 
-1. Buka web [OpenRouter.ai](https://openrouter.ai/) lalu buat akun (bisa Sign up langsung via Google atau GitHub).
-2. Setelah berhasil login, masuk ke dashboard bagian **[Keys](https://openrouter.ai/settings/keys)**.
-3. Klik tombol **"Create Key"** (Beri nama sesuka Anda, contoh: `Oats AI Local`).
-4. Salin kode API Key yang muncul (Dimulai dengan `sk-or-v1-...`). *Simpan dengan baik karena kode ini hanya akan ditampilkan sekali.*
-5. Aplikasi ini menggunakan model *free-tier* OpenRouter yang disediakan gratis, sehingga Anda tidak perlu memasukkan kartu kredit atau saldo apa pun!
+1. Go to the [OpenRouter.ai](https://openrouter.ai/) website and create an account (you can sign up directly via Google or GitHub).
+2. Once logged in, go to the **[Keys](https://openrouter.ai/settings/keys)** section in your dashboard.
+3. Click the **"Create Key"** button (Name it whatever you like, e.g., `Oats AI Local`).
+4. Copy the generated API Key (Starts with `sk-or-v1-...`). *Keep it safe as this code will only be shown once.*
+5. This application uses the free-tier OpenRouter models provided for free, so you do not need to enter a credit card or add any balance!
 
-### Cara Memasang API Key ke Aplikasi:
+### How to Install the API Key into the Application:
 
-1. Buat file baru dengan nama `.env` di direktori proyek ini (`oats-app/.env`).
-2. Masukkan baris berikut di dalam file `.env` tersebut, dan ganti `KODE_API_ANDA_DISINI` dengan kode rahasia yang tadi disalin:
+1. Create a new file named `.env` in this project directory (`oats-app/.env`).
+2. Insert the following line inside the `.env` file, and replace `YOUR_API_CODE_HERE` with the secret code you copied earlier:
 
 ```env
-VITE_OPENROUTER_API_KEY=KODE_API_ANDA_DISINI
+VITE_OPENROUTER_API_KEY=YOUR_API_CODE_HERE
 ```
 
-3. Simpan file tersebut.
-4. **Wajib:** Jika terminal (*dev server*) Anda sebelumnya sedang berjalan, matikan terlebih dahulu dengan menekan tombol `Ctrl + C` di terminal, lalu jalankan perintah `npm run tauri dev` kembali. Vite hanya membaca file `.env` saat awal *startup*!
+3. Save the file.
+4. **Mandatory:** If your terminal (dev server) is currently running, stop it first by pressing `Ctrl + C` in the terminal, then run the `npm run tauri dev` command again. Vite only reads the `.env` file during the initial startup!
 
-> **✨ Fitur Algoritma Fallback:**
-> Jika API *free-tier* OpenRouter sedang lambat atau menolak request karena penuh (*server overloaded*), Oats AI secara otomatis akan melindungi catatan rapat Anda, dengan beralih menggunakan Algoritma Ringkasan Lokal. Peringkasan sekunder ini berjalan 100% di komputer Anda tanpa kuota internet sedikitpun.
+> **✨ Fallback Algorithm Feature:**
+> If the OpenRouter free-tier API is slow or rejects requests due to being overloaded, Oats AI will automatically protect your meeting notes by switching to the Local Summary Algorithm. This secondary summarization runs 100% on your computer without using any internet quota.
